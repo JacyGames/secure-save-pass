@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  db:
+    container_name: pass-db
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    ports:
+      - 1433:1433
+    volumes:
+      - ./.data/db:/var/opt/mssql/data
+    environment:
+      SA_PASSWORD: "Password1"
+      ACCEPT_EULA: "Y"
+    env_file:
+      - .env
+
+  api:
+    container_name: pass-api
+    build:
+      context: .
+      dockerfile: secure-save-pass/Dockerfile
+    ports:
+      - 8080:80
+    depends_on:
+      - db
