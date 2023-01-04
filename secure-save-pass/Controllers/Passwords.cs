@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using secure_save_pass.Data;
+using secure_save_pass.Mappers;
 using secure_save_pass.Models;
 
 namespace secure_save_pass.Controllers
@@ -30,7 +31,7 @@ namespace secure_save_pass.Controllers
             pagination.AllItemsCount = count;
             pagination.PageCount = ItemsCountOnPage;
             response.Pagination = pagination;
-            response.PasswordInfos = passwords;
+            response.PasswordInfos = passwords.Select(pass => PasswordInfoResponseMapper.Map(pass));
 
             return Ok(response);
         }
@@ -54,7 +55,7 @@ namespace secure_save_pass.Controllers
                 passInfo.CreatedDate = DateTime.Now;
                 await _securePassDBContext.AddAsync(passInfo);
                 await _securePassDBContext.SaveChangesAsync();
-                return Ok(passInfo);
+                return Ok(PasswordInfoResponseMapper.Map(passInfo));
             }catch(Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -66,14 +67,14 @@ namespace secure_save_pass.Controllers
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var passwordInfo = await _securePassDBContext.PasswordInfos.FindAsync(id);
-            if(passwordInfo == null)
+            if (passwordInfo == null)
             {
                 return NotFound();
             }
 
             _securePassDBContext.PasswordInfos.Remove(passwordInfo);
             await _securePassDBContext.SaveChangesAsync();
-            return Ok(passwordInfo);
+            return Ok(new { id });
 
         }
 
