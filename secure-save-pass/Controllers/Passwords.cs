@@ -24,7 +24,7 @@ namespace secure_save_pass.Controllers
             var passwordList = await _securePassDBContext.PasswordInfos.ToListAsync();
             int count = _securePassDBContext.PasswordInfos.Count();
             int skipCount = ItemsCountOnPage * page - ItemsCountOnPage;
-            var passwords = passwordList.OrderBy(user => user.Id).Skip(skipCount).Take(ItemsCountOnPage);
+            var passwords = passwordList.OrderBy(user => user.CreatedDate).Skip(skipCount).Take(ItemsCountOnPage);
             var response = new PasswordResponse();
             var pagination = new Pagination();
             pagination.PageNumber = page;
