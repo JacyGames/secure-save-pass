@@ -78,6 +78,40 @@ namespace secure_save_pass.Controllers
 
         }
 
+        [HttpGet]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> GetPassword([FromRoute] Guid id)
+        {
+            var passwordInfo = await _securePassDBContext.PasswordInfos.FindAsync(id);
+            if (passwordInfo == null)
+            {
+                return NotFound();
+            }
+            return Ok(passwordInfo);
+        }
+
+        [HttpPut]
+        [Route("{id:Guid}")]
+        public async Task<IActionResult> UpdatePassword([FromRoute] Guid id, [FromBody] PasswordRequest passwordRequest)
+        {
+            var passwordInfo = await _securePassDBContext.PasswordInfos.FindAsync(id);
+            if (passwordInfo == null)
+            {
+                return NotFound();
+            }
+            passwordInfo.Folter = passwordRequest.Folder;
+            passwordInfo.Password = passwordRequest.Password;
+            passwordInfo.ImportanceLevel = passwordRequest.ImportanceLevel;
+            passwordInfo.Name = passwordRequest.Name;
+            passwordInfo.Description = passwordRequest.Description;
+            passwordInfo.Login = passwordRequest.Login;
+            passwordInfo.PassUserName = passwordRequest.PassUserName;
+            passwordInfo.Url = passwordRequest.Url;
+
+            await _securePassDBContext.SaveChangesAsync();
+
+            return Ok(PasswordInfoResponseMapper.Map(passwordInfo));
+    }
 
     }
 }
