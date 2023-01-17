@@ -14,9 +14,9 @@ namespace secure_save_pass.Mappers
             passDto.PassUserName = passwordInfo.PassUserName;
             passDto.Description = passwordInfo.Description;
             passDto.Login = passwordInfo.Login;
-            passDto.Folter = passwordInfo.Folter;
+            passDto.Folder = passwordInfo.Folter;
             passDto.Id = passwordInfo.Id;
-            passDto.CreatedDate = DateTime.Now;
+            passDto.CreatedDate = passwordInfo.CreatedDate;
             return passDto;
         }
     }

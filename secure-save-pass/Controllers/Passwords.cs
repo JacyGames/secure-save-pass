@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using secure_save_pass.Data;
 using secure_save_pass.Mappers;
@@ -11,8 +10,8 @@ namespace secure_save_pass.Controllers
     [Route("api/[controller]")]
     public class Passwords : Controller
     {
-        private SecurePassDBContext _securePassDBContext;
-        private int ItemsCountOnPage = 10;
+        private readonly SecurePassDBContext _securePassDBContext;
+        private readonly int ItemsCountOnPage = 10;
         public Passwords(SecurePassDBContext securePassDBContext)
         {
             _securePassDBContext = securePassDBContext;
@@ -26,10 +25,12 @@ namespace secure_save_pass.Controllers
             int skipCount = ItemsCountOnPage * page - ItemsCountOnPage;
             var passwords = passwordList.OrderBy(user => user.CreatedDate).Skip(skipCount).Take(ItemsCountOnPage);
             var response = new PasswordResponse();
-            var pagination = new Pagination();
-            pagination.PageNumber = page;
-            pagination.AllItemsCount = count;
-            pagination.PageCount = ItemsCountOnPage;
+            var pagination = new Pagination
+            {
+                PageNumber = page,
+                AllItemsCount = count,
+                PageCount = ItemsCountOnPage
+            };
             response.Pagination = pagination;
             response.PasswordInfos = passwords.Select(pass => PasswordInfoResponseMapper.Map(pass));
 
@@ -41,18 +42,20 @@ namespace secure_save_pass.Controllers
         {
             try
             {
-                var passInfo = new PasswordInfo();
-                passInfo.Password = passwordRequest.Password;
-                passInfo.Url = passwordRequest.Url;
-                passInfo.ImportanceLevel = passwordRequest.ImportanceLevel;
-                passInfo.Name = passwordRequest.Name;
-                passInfo.PassUserName = passwordRequest.PassUserName;
-                passInfo.Description = passwordRequest.Description;
-                passInfo.Login = passwordRequest.Login;
-                passInfo.Folter = passwordRequest.Folder;
-                passInfo.Id = Guid.NewGuid();
-                passInfo.UserId = new Guid("5C60F693-BEF5-E011-A485-80EE7300C692");
-                passInfo.CreatedDate = DateTime.Now;
+                var passInfo = new PasswordInfo
+                {
+                    Password = passwordRequest.Password,
+                    Url = passwordRequest.Url,
+                    ImportanceLevel = passwordRequest.ImportanceLevel,
+                    Name = passwordRequest.Name,
+                    PassUserName = passwordRequest.PassUserName,
+                    Description = passwordRequest.Description,
+                    Login = passwordRequest.Login,
+                    Folter = passwordRequest.Folder,
+                    Id = Guid.NewGuid(),
+                    UserId = new Guid("5C60F693-BEF5-E011-A485-80EE7300C692"),
+                    CreatedDate = DateTime.Now
+                };
                 await _securePassDBContext.AddAsync(passInfo);
                 await _securePassDBContext.SaveChangesAsync();
                 return Ok(PasswordInfoResponseMapper.Map(passInfo));
