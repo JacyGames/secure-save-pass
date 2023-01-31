@@ -84,7 +84,7 @@ namespace secure_save_pass.Controllers
                     UserId = new Guid(user.Id),
                     CreatedDate = DateTime.Now
                 };
-                await _securePassDBContext.AddAsync(passInfo);
+                await _securePassDBContext.PasswordInfos.AddAsync(passInfo);
                 await _securePassDBContext.SaveChangesAsync();
                 return Ok(PasswordInfoResponseMapper.Map(passInfo));
             }catch(Exception ex)

@@ -13,5 +13,6 @@ namespace secure_save_pass.Models.Auth
 
         [Required(ErrorMessage = "Password is required")]
         public string Password { get; set; }
+        public string PasswordHint { get; set; }
     }
 }

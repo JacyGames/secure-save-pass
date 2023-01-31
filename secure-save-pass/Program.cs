@@ -42,6 +42,7 @@ builder.Services.AddSwaggerGen(c => {
         }
     });
 });
+
 builder.Services.AddDbContext<SecurePassDBContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("DevConnect")));
 // For Identity

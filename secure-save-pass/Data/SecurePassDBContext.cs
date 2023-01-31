@@ -15,5 +15,7 @@ namespace secure_save_pass.Data
             base.OnModelCreating(builder);
         }
         public DbSet<PasswordInfo> PasswordInfos { get; set; }
+
+        public DbSet<UserInfo> UserInfos { get; set; }
     }
 }
