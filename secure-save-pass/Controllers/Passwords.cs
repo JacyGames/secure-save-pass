@@ -40,7 +40,7 @@ namespace secure_save_pass.Controllers
                 IdentityUser user = await _userManager.FindByNameAsync(currentUserName);
                 Guid userId = new(user.Id);
                 var passwordList = await _securePassDBContext.PasswordInfos.Where(pass => pass.UserId == userId).ToListAsync();
-                int count = _securePassDBContext.PasswordInfos.Count();
+                int count = passwordList.Count();
                 int skipCount = ItemsCountOnPage * page - ItemsCountOnPage;
                 var passwords = passwordList.OrderBy(user => user.CreatedDate).Skip(skipCount).Take(ItemsCountOnPage);
                 var response = new PasswordResponse();
