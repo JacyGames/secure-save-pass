@@ -86,3 +86,7 @@ C:\projects\un-comm\secure-save-pass\secure-save-pass\bin\Debug\net6.0\Microsoft
 C:\projects\un-comm\secure-save-pass\secure-save-pass\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\projects\un-comm\secure-save-pass\secure-save-pass\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
 C:\projects\un-comm\secure-save-pass\secure-save-pass\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+C:\projects\un-comm\secure-save-pass\secure-save-pass\bin\Debug\net6.0\MailKit.dll
+C:\projects\un-comm\secure-save-pass\secure-save-pass\bin\Debug\net6.0\MimeKit.dll
+C:\projects\un-comm\secure-save-pass\secure-save-pass\bin\Debug\net6.0\NETCore.MailKit.dll
+C:\projects\un-comm\secure-save-pass\secure-save-pass\bin\Debug\net6.0\BouncyCastle.Crypto.dll

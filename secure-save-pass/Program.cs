@@ -5,10 +5,19 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using secure_save_pass.Data;
 using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Configuration;
+using secure_save_pass.Services.EmailService;
 
 var builder = WebApplication.CreateBuilder(args);
 
 ConfigurationManager configuration = builder.Configuration;
+
+var emailConfig = configuration
+               .GetSection("EmailConfiguration")
+               .Get<EmailConfiguration>();
+
+builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 
 // Add services to the container.
 

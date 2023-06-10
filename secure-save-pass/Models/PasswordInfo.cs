@@ -31,10 +31,12 @@ namespace secure_save_pass.Models
 
     }
 
-    public class PasswordResponse : IPaginatedResponse
+    public class PasswordResponse : IResponse, IPaginatedResponse
     {
         public Pagination Pagination { get; set; }
         public virtual IEnumerable<PasswordResponseDto> PasswordInfos { get; set; }
+        public int StatusCode { get; set; }
+        public string Message { get; set; }
     }
 
     public class PasswordResponseDto
